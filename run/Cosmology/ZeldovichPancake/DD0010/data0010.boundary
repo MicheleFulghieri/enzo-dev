@@ -1,0 +1,7 @@
+BoundaryRank         = 1
+BoundaryDimension    = 1030 
+NumberOfBaryonFields = 4
+ParticleBoundaryType = 3
+BoundaryFieldType    = 0 4 1 2 
+BaryonFileName       = ./DD0010/data0010.boundary.hdf
+BoundaryValuePresent = 0 0 

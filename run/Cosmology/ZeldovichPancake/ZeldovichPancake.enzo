@@ -5,7 +5,7 @@
 #
 ProblemType                = 20      // Zeldovich pancake
 TopGridRank                = 1
-TopGridDimensions          = 256
+TopGridDimensions          = 1024    // align with the max resolution of the quokka run
 SelfGravity                = 1       // gravity on
 TopGridGravityBoundary     = 0       // Periodic BC for gravity
 LeftFaceBoundaryCondition  = 3       // same for fluid
@@ -19,23 +19,23 @@ ZeldovichPancakeCollapseRedshift = 1
 #  define cosmology parameters
 #
 ComovingCoordinates        = 1       // Expansion ON
-CosmologyHubbleConstantNow = 0.5
-CosmologyComovingBoxSize   = 64.0    // 64 Mpc/h
+CosmologyHubbleConstantNow = 0.7     // instead of 0.5, to align with quokka test
+CosmologyComovingBoxSize   = 14      // insted of 64 Mpc/h -> 20 Mpc com
 CosmologyMaxExpansionRate  = 0.01    //
-CosmologyInitialRedshift   = 20      // start at z=20
-CosmologyFinalRedshift     = 0
+CosmologyInitialRedshift   = 49      // insted of start at z=20
+CosmologyFinalRedshift     = 1
 CosmologyOmegaMatterNow    = 1
 CosmologyOmegaLambdaNow    = 0
 GravitationalConstant      = 1       // this must be true for cosmology
 #
 #  set I/O and stop/start parameters
 #
-dtDataDump             = 100.0    // dump at beginning and end
+dtDataDump             = 5.0    // instead of 100, to have more frequent outputs and trace the evolution
 #
 #  set hydro parameters
 #
-Gamma                  = 1.6667
-CourantSafetyNumber    = 0.5
+Gamma                  = 5.0 / 3.0
+CourantSafetyNumber    = 0.3     // instead pf 0.5, to align with quokka
 PPMDiffusionParameter  = 0       // diffusion off
 DualEnergyFormalism    = 1       // use total & internal energy
 #
