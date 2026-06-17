@@ -12,34 +12,37 @@ LeftFaceBoundaryCondition  = 3 3 3        // same for fluid
 RightFaceBoundaryCondition = 3 3 3
 
 
-StopCycle = 0   // 0 for not use
+StopCycle = 0   // 0 for not use  (stop only at the final redshift)
 #
 #  problem parameters
 #
-ZeldovichPancakeCentralOffset    = 0
-ZeldovichPancakeCollapseRedshift = 1
+ZeldovichPancakeCentralOffset    = 0.0   // no central offset
+ZeldovichPancakeCollapseRedshift = 1     // z_collapse (a_coll = 0.5)
 #
 #  define cosmology parameters
 #
-ComovingCoordinates        = 1       // Expansion ON
-CosmologyHubbleConstantNow = 0.5
-CosmologyComovingBoxSize   = 64.0    // 64 Mpc/h
-CosmologyMaxExpansionRate  = 0.01    //
-CosmologyInitialRedshift   = 20      // start at z=20
-CosmologyFinalRedshift     = 0
-CosmologyOmegaMatterNow    = 1
-CosmologyOmegaLambdaNow    = 0
-GravitationalConstant      = 1       // this must be true for cosmology
+ComovingCoordinates            = 1       // Expansion ON
+CosmologyHubbleConstantNow     = 0.7     // Hubble constant at z=0 (100 km/s/Mpc)
+CosmologyComovingBoxSize       = 14.29   // 14.26 cMpc/h -> 10 cMpc
+CosmologyMaxExpansionRate      = 0.01    // constrain timestep basing on a variation
+CosmologyInitialRedshift       = 99      // start at a_in = 0.01
+CosmologyFinalRedshift         = -0.2    // a_fin = 1.25
+CosmologyOmegaMatterNow        = 1       // EdS
+CosmologyOmegaLambdaNow        = 0
+ZeldovichPancakeOmegaBaryonNow = 0.01
+ZeldovichPancakeOmegaCDMNow    = 0.99
+GravitationalConstant          = 1       // this must be true for cosmology
 
 #
 #  set I/O and stop/start parameters
 #
-dtDataDump             = 100.0
-#
+#dtDataDump             = 100.0           // time interval between outputs (code units)
+CycleSkipDataDump       = 25              // save plotfiles every 25 steps
+#  
 #  set hydro parameters
 #
 Gamma                  = 1.6667
-CourantSafetyNumber    = 0.5
+CourantSafetyNumber    = 0.3
 PPMDiffusionParameter  = 0       // diffusion off
 DualEnergyFormalism    = 1       // use total & internal energy
 ConservativeInterpolation = 0
@@ -48,15 +51,15 @@ InterpolationMethod       = 1
 #
 #  set grid refinement parameters
 #
-StaticHierarchy           = 0    // dynamic hierarchy
-MaximumRefinementLevel    = 2    // use up to 2 levels
-RefineBy                  = 4    // refinement factor
-CellFlaggingMethod        = 2 3    // use mass & shock criteria for refinement 
-MinimumOverDensityForRefinement  = 1.5  // times the initial overdensity
+StaticHierarchy           = 1    // static hierarchy (no adaptive)
+MaximumRefinementLevel    = 0    // coaresest (lower) is 0
+RefineBy                  = 2    // refinement factor
+#CellFlaggingMethod        = 2 3    // use mass & shock criteria for refinement 
+#MinimumOverDensityForRefinement  = 1.5  // times the initial overdensity
 #
 #  set some global parameters
 #
-MinimumEfficiency      = 0.4     // better value for 1d than 0.2
+#MinimumEfficiency      = 0.4     // better value for 1d than 0.2
 
 
 
@@ -139,3 +142,14 @@ derived_vars = gpot               # keep track of the gravitational potential
 # not used
 #*********
 #amr.max_grid_size   = 16         # at least 128 for GPUs
+
+
+#################################################################
+################### DIFFERENCES WRT QUOKKA ######################
+#################################################################
+# rivedere GravitationalConstant          = 1       // this must be true for cosmology
+# set PPMDiffusionParameter PPM diffusion parameter = 0. It is either on (1) or off (0)
+# vedere se e quanto impattano
+# ConservativeInterpolation = 0
+# FluxCorrection            = 1
+# InterpolationMethod       = 1
