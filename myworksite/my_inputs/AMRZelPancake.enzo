@@ -55,7 +55,7 @@ InterpolationMethod       = 1
 StaticHierarchy           = 1    // static hierarchy (no adaptive)
 MaximumRefinementLevel    = 0    // coaresest (lower) is 0
 RefineBy                  = 2    // refinement factor
-CellFlaggingMethod        = 0    // no refinement criteria
+#CellFlaggingMethod        = 2 3    // use mass & shock criteria for refinement 
 #MinimumOverDensityForRefinement  = 1.5  // times the initial overdensity
 #
 #  set some global parameters

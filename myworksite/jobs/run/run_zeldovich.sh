@@ -13,10 +13,9 @@
 
 # Useful paths
 BASE_DIR="/data/mfulghieri/enzo-dev"
-# EXE="${BASE_DIR}/build/src/problems/DMZeldovich/DMZeldovich"
-# INPUT="${BASE_DIR}/inputs/DMZeldovich.in"
+ENZO_EXE="${BASE_DIR}/src/enzo/enzo.exe" 
+SIM_DIR="${BASE_DIR}/run/Cosmology/AMRZeldovichPancake"
 OUT_DIR="${BASE_DIR}/outputs/amr_zeldovich"
-
 
 # Creation of the required directories
 mkdir -p "${OUT_DIR}"
@@ -40,6 +39,7 @@ echo "------------------------------------------------------------"
 #export OMP_PLACES=threads                    # Distribute threads across CPU cores
 #export OMP_PROC_BIND=spread                  # Spread threads across cores to improve performance  
 
+module purge
 module load gcc-11.3.0/ompi-4.1.4_nccl
 module load gcc-11.3.0/hdf5-1.14.1
 
@@ -64,10 +64,13 @@ echo "Total MPI tasks: $SLURM_NTASKS"
 echo "============================================================"
 echo ""
 
+# Symobolic copy enzo.exe in the test dir
+#ln -s "${ENZO_EXE}" "${SIM_DIR}"
+
 # Change to the output directory before running the command to ensure all output files are created there
 cd "${OUT_DIR}"
 
 # Command execution
-mpirun -np ./enzo.exe ZeldovichPancake.enzo
+mpirun -np $SLURM_NTASKS "${ENZO_EXE}" "${SIM_DIR}/AMRZeldovichPancake.enzo"
 
 echo "Simulation terminated at: $(date)"
